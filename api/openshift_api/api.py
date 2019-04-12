@@ -1,9 +1,16 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from django.db import transaction
+
+from ansible_api.models import Role
 from ansible_api.permissions import IsSuperUser
+from openshift_api.models.cluster import Cluster
+from openshift_api.models.deploy import DeployExecution
+from openshift_api.models.host import Volume, HostInfo, Host
+from openshift_api.models.node import Node
+from openshift_api.models.package import Package
+from openshift_api.models.setting import Setting
 from . import serializers
-from .models import Cluster, Node, Role, DeployExecution, Package, Host, Setting, Volume, HostInfo
 from .mixin import ClusterResourceAPIMixin
 from .tasks import start_deploy_execution
 from django.db.models import Q

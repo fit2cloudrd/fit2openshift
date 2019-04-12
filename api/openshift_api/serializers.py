@@ -1,10 +1,15 @@
 from rest_framework import serializers
 from django.shortcuts import reverse
 
-from ansible_api.serializers import GroupSerializer, ProjectSerializer
+from ansible_api.serializers import GroupSerializer, ProjectSerializer, Role
 from ansible_api.serializers import HostSerializer as AnsibleHostSerializer
 from ansible_api.serializers.inventory import HostReadSerializer
-from .models import Cluster, Node, Role, DeployExecution, Package, Host, Setting, HostInfo, Volume
+from openshift_api.models.cluster import Cluster
+from openshift_api.models.deploy import DeployExecution
+from openshift_api.models.host import Volume, HostInfo, Host
+from openshift_api.models.node import Node
+from openshift_api.models.package import Package
+from openshift_api.models.setting import Setting
 
 __all__ = [
     'PackageSerializer', 'ClusterSerializer', 'NodeSerializer',

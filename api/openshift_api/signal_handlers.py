@@ -4,8 +4,12 @@ from django.db.models.signals import m2m_changed, post_save, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+from openshift_api.models.cluster import Cluster
+from openshift_api.models.host import HostInfo
+from openshift_api.models.node import Node
+from openshift_api.models.package import Package
+from openshift_api.models.setting import Setting
 from .signals import pre_deploy_execution_start, post_deploy_execution_start
-from .models import Role, Package, Cluster, Node, Host, Setting, HostInfo
 
 
 @receiver(post_save, sender=Cluster)
