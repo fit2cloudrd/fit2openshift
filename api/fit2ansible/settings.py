@@ -35,9 +35,11 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
-    'openshift_api.apps.OpenshiftApiConfig',
     'ansible_api.apps.AnsibleApiConfig',
     'celery_api.apps.CeleryApiConfig',
+    'openshift_base.apps.OpenshiftBaseConfig',
+    'openshift_api.apps.OpenshiftApiConfig',
+    'openshift_storage.apps.OpenshiftStorageConfig',
     'users.apps.UsersConfig',
     'django_celery_beat',
     'rest_framework',

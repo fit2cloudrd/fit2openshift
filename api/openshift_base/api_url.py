@@ -1,8 +1,8 @@
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
-from openshift_api import api
+from openshift_base import api
 
-app_name = "openshift_api"
+app_name = "openshift_base"
 router = DefaultRouter()
 
 router.register('clusters', api.ClusterViewSet, 'cluster')
@@ -11,7 +11,6 @@ router.register('packages', api.PackageViewSet, 'package')
 router.register('host', api.HostViewSet, 'host')
 router.register('setting', api.SettingViewSet, 'setting')
 router.register('hostInfo', api.HostInfoViewSet, 'hostInfo')
-# router.register('storage',api.StorageViewSet,'storage')
 
 cluster_router = routers.NestedDefaultRouter(router, r'clusters', lookup='cluster')
 cluster_router.register(r'configs', api.ClusterConfigViewSet, 'cluster-config')

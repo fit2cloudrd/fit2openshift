@@ -26,7 +26,10 @@ def get_api_v1_urlpatterns():
     _urlpatterns = [
         path('', include('users.urls')),
         path('', include('celery_api.urls.api_urls')),
+        path('', include('openshift_base.api_url')),
         path('', include('openshift_api.api_url')),
+        path('', include('openshift_storage.api_url')),
+
     ]
     return _urlpatterns
 

@@ -1,0 +1,53 @@
+name: glusterfs
+version: 6.0
+resource: storage
+playbooks:
+  - name: install_glusterfs
+    alias: playbooks/install_glusterfs.yml
+  - name: install_heketi
+    alias: playbooks/install_heketi.yml
+  - name:  uninstall_glusterfs
+    alias: playbooks/uninstall_glusterfs.yml
+  - name:  uninstall_heketi
+    alias: playbooks/uninstall_heketi.yml
+  - name:  upgrade_glusterfs
+    alias: playbooks/uninstall_glusterfs.yml
+  - name: config_nodes
+    alias: openshift-ansible/playbooks/prerequisites.yml
+
+roles:
+  - name: glusterfs
+
+templates:
+  - name: glusterfs
+    comment: glusterfs 集群
+    operations:
+      - name: install
+        comment: '安装'
+        playbooks:
+          - install_glusterfs
+      - name: uninstall
+        comment: '卸载'
+        playbooks:
+          - uninstall_glusterfs
+      - name: config_nodes
+        comment: '变更节点'
+        playbooks:
+          - config_nodes
+  - name: glusterfs-heketi
+    comment: glusterfs-heketi 集群
+    operations:
+      - name: install
+        comment: '安装'
+        playbooks:
+          - install_glusterfs
+      - name: uninstall
+        comment: '卸载'
+        playbooks:
+          - uninstall_glusterfs
+      - name: config_nodes
+        comment: '变更节点'
+        playbooks:
+          - config_nodes
+    roles:
+      - name: heketi

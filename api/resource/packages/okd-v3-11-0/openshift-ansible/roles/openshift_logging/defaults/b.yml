@@ -1,0 +1,239 @@
+hc_nodes:
+  hosts:
+    # Host1
+    host1:
+      # Dedupe & Compression config
+      # If logicalsize >= 1000G then slabsize=32G else slabsize=2G
+      #gluster_infra_vdo:
+         #- { name: 'vdo_sdb1', device: '/dev/sdb1', logicalsize: '3000G', emulate512: 'on', slabsize: '32G',
+            #blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
+         #- { name: 'vdo_sdb2', device: '/dev/sdb2', logicalsize: '3000G', emulate512: 'on', slabsize: '32G',
+            #blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
+
+      # With Dedupe & Compression
+      #gluster_infra_volume_groups:
+        #- vgname: vg_sdb1
+          #pvname: /dev/mapper/vdo_sdb1
+        #- vgname: vg_sdb2
+          #pvname: /dev/mapper/vdo_sdb2
+
+      # Without Dedupe & Compression
+      gluster_infra_volume_groups:
+        - vgname: vg_sdb1
+          pvname: /dev/sdb1
+        - vgname: vg_sdb2
+          pvname: /dev/sdb2
+
+      gluster_infra_mount_devices:
+        - path: /gluster_bricks/engine
+          lvname: gluster_lv_engine
+          vgname: vg_sdb1
+        - path: /gluster_bricks/data
+          lvname: gluster_lv_data
+          vgname: vg_sdb2
+
+      gluster_infra_thinpools:
+        - {vgname: 'vg_sdb2', thinpoolname: 'thinpool_vg_sdb2', thinpoolsize: '500G', poolmetadatasize: '4G'}
+
+      gluster_infra_cache_vars:
+        - vgname: vg_sdb2
+          cachedisk: /dev/sdb3
+          cachelvname: cachelv_thinpool_vg_sdb2
+          cachethinpoolname: thinpool_vg_sdb2
+          cachelvsize: '10G'
+          cachemetalvsize: '2G'
+          cachemetalvname: cache_thinpool_vg_sdb2
+          cachemode: writethrough
+
+      gluster_infra_thick_lvs:
+        - vgname: vg_sdb1
+          lvname: gluster_lv_engine
+          size: 100G
+
+      gluster_infra_lv_logicalvols:
+        - vgname: vg_sdb2
+          thinpool: thinpool_vg_sdb2
+          lvname: gluster_lv_data
+          lvsize: 200G
+        - vgname: vg_sdb2
+          thinpool: thinpool_vg_sdb2
+          lvname: gluster_lv_vmstore
+          lvsize: 200G
+
+      # Mount the devices
+      gluster_infra_mount_devices:
+         - { path: '/gluster_bricks/data', vgname: vg_sdb2, lvname: gluster_lv_data }
+         - { path: '/gluster_bricks/vmstore', vgname: vg_sdb2, lvname: gluster_lv_vmstore }
+         - { path: '/gluster_bricks/engine', vgname: vg_sdb1, lvname: gluster_lv_engine }
+
+    #Host2
+    host2:
+
+      # Dedupe & Compression config
+      # If logicalsize >= 1000G then slabsize=32G else slabsize=2G
+      #gluster_infra_vdo:
+         #- { name: 'vdo_sdb1', device: '/dev/sdb1', logicalsize: '3000G', emulate512: 'on', slabsize: '32G',
+            #blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
+         #- { name: 'vdo_sdb2', device: '/dev/sdb2', logicalsize: '3000G', emulate512: 'on', slabsize: '32G',
+            #blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
+
+      # With Dedupe & Compression
+      #gluster_infra_volume_groups:
+        #- vgname: vg_sdb1
+          #pvname: /dev/mapper/vdo_sdb1
+        #- vgname: vg_sdb2
+          #pvname: /dev/mapper/vdo_sdb2
+
+      # Without Dedupe & Compression
+      gluster_infra_volume_groups:
+        - vgname: vg_sdb1
+          pvname: /dev/sdb1
+        - vgname: vg_sdb2
+          pvname: /dev/sdb2
+
+      gluster_infra_mount_devices:
+        - path: /gluster_bricks/engine
+          lvname: gluster_lv_engine
+          vgname: vg_sdb1
+        - path: /gluster_bricks/data
+          lvname: gluster_lv_data
+          vgname: vg_sdb2
+
+      gluster_infra_thinpools:
+        - {vgname: 'vg_sdb2', thinpoolname: 'thinpool_vg_sdb2', thinpoolsize: '500G', poolmetadatasize: '4G'}
+
+      gluster_infra_cache_vars:
+        - vgname: vg_sdb2
+          cachedisk: /dev/sdb3
+          cachelvname: cachelv_thinpool_vg_sdb2
+          cachethinpoolname: thinpool_vg_sdb2
+          cachelvsize: '10G'
+          cachemetalvsize: '2G'
+          cachemetalvname: cache_thinpool_vg_sdb2
+          cachemode: writethrough
+
+      gluster_infra_thick_lvs:
+        - vgname: vg_sdb1
+          lvname: gluster_lv_engine
+          size: 100G
+
+      gluster_infra_lv_logicalvols:
+        - vgname: vg_sdb2
+          thinpool: thinpool_vg_sdb2
+          lvname: gluster_lv_data
+          lvsize: 200G
+        - vgname: vg_sdb2
+          thinpool: thinpool_vg_sdb2
+          lvname: gluster_lv_vmstore
+          lvsize: 200G
+
+      # Mount the devices
+      gluster_infra_mount_devices:
+         - { path: '/gluster_bricks/data', vgname: vg_sdb2, lvname: gluster_lv_data }
+         - { path: '/gluster_bricks/vmstore', vgname: vg_sdb2, lvname: gluster_lv_vmstore }
+         - { path: '/gluster_bricks/engine', vgname: vg_sdb1, lvname: gluster_lv_engine }
+
+    #Host3
+    host3:
+
+      # Dedupe & Compression config
+      # If logicalsize >= 1000G then slabsize=32G else slabsize=2G
+      #gluster_infra_vdo:
+         #- { name: 'vdo_sdb1', device: '/dev/sdb1', logicalsize: '3000G', emulate512: 'on', slabsize: '32G',
+            #blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
+         #- { name: 'vdo_sdb2', device: '/dev/sdb2', logicalsize: '3000G', emulate512: 'on', slabsize: '32G',
+            #blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
+
+      # With Dedupe & Compression
+      #gluster_infra_volume_groups:
+        #- vgname: vg_sdb1
+          #pvname: /dev/mapper/vdo_sdb1
+        #- vgname: vg_sdb2
+          #pvname: /dev/mapper/vdo_sdb2
+
+      # Without Dedupe & Compression
+      gluster_infra_volume_groups:
+        - vgname: vg_sdb1
+          pvname: /dev/sdb1
+        - vgname: vg_sdb2
+          pvname: /dev/sdb2
+
+      gluster_infra_mount_devices:
+        - path: /gluster_bricks/engine
+          lvname: gluster_lv_engine
+          vgname: vg_sdb1
+        - path: /gluster_bricks/data
+          lvname: gluster_lv_data
+          vgname: vg_sdb2
+
+      gluster_infra_thinpools:
+        - {vgname: 'vg_sdb2', thinpoolname: 'thinpool_vg_sdb2', thinpoolsize: '500G', poolmetadatasize: '4G'}
+
+      gluster_infra_cache_vars:
+        - vgname: vg_sdb2
+          cachedisk: /dev/sdb3
+          cachelvname: cachelv_thinpool_vg_sdb2
+          cachethinpoolname: thinpool_vg_sdb2
+          cachelvsize: '10G'
+          cachemetalvsize: '2G'
+          cachemetalvname: cache_thinpool_vg_sdb2
+          cachemode: writethrough
+
+      gluster_infra_thick_lvs:
+        - vgname: vg_sdb1
+          lvname: gluster_lv_engine
+          size: 100G
+
+      gluster_infra_lv_logicalvols:
+        - vgname: vg_sdb2
+          thinpool: thinpool_vg_sdb2
+          lvname: gluster_lv_data
+          lvsize: 200G
+        - vgname: vg_sdb2
+          thinpool: thinpool_vg_sdb2
+          lvname: gluster_lv_vmstore
+          lvsize: 200G
+
+      # Mount the devices
+      gluster_infra_mount_devices:
+         - { path: '/gluster_bricks/data', vgname: vg_sdb2, lvname: gluster_lv_data }
+         - { path: '/gluster_bricks/vmstore', vgname: vg_sdb2, lvname: gluster_lv_vmstore }
+         - { path: '/gluster_bricks/engine', vgname: vg_sdb1, lvname: gluster_lv_engine }
+
+  # Common configurations
+  vars:
+    cluster_nodes:
+       - host1
+       - host2
+       - host3
+    gluster_features_hci_cluster: "{{ cluster_nodes }}"
+    # Set up GlusterFS hyperconverged interface
+    gluster_features_hci_volumes:
+       - { volname: 'engine', brick: '/gluster_bricks/engine/engine' }
+       - { volname: 'data', brick: '/gluster_bricks/data/data' }
+       - { volname: 'vmstore', brick: '/gluster_bricks/vmstore/vmstore' }
+    # Firewall setup
+    gluster_infra_fw_ports:
+       - 2049/tcp
+       - 54321/tcp
+       - 5900/tcp
+       - 5900-6923/tcp
+       - 5666/tcp
+       - 16514/tcp
+    gluster_infra_fw_permanent: true
+    gluster_infra_fw_state: enabled
+    gluster_infra_fw_zone: public
+    gluster_infra_fw_services:
+       - glusterfs
+    gluster_infra_disktype: RAID6
+    gluster_infra_diskcount: 12
+    gluster_infra_stripe_unit_size: 128
+
+## Auto add hosts vars
+
+gluster:
+ hosts:
+  host2:
+  host3:
+ vars:
+  storage_domains: [{"name":"data","host":"host1","address":"host1","path":"/data","mount_options":"backup-volfile-servers=host2:host3"},{"name":"vmstore","host":"host1","address":"host1","path":"/vmstore","mount_options":"backup-volfile-servers=host2:host3"}]
