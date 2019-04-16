@@ -1,0 +1,32 @@
+<clr-datagrid [clrDgLoading]="loading" [clrDgSelected]="selectedStorages">
+  <clr-dg-action-bar>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="addNewStorage()">
+      <clr-icon shape="plus" size="16"></clr-icon>
+      添加
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="onDeleted()"
+            [disabled]="selectedStorages.length == 0">
+      <clr-icon shape="close"></clr-icon>
+      删除
+    </button>
+  </clr-dg-action-bar>
+  <clr-dg-column>名称</clr-dg-column>
+  <clr-dg-column>节点</clr-dg-column>
+  <clr-dg-column>类型</clr-dg-column>
+  <clr-dg-column>运行状态</clr-dg-column>
+  <clr-dg-column>备注</clr-dg-column>
+
+  <clr-dg-row *clrDgItems="let storage of storages" [clrDgItem]="storage">
+    <clr-dg-cell>{{storage.name}}</clr-dg-cell>
+    <clr-dg-cell>{{storage.hostSize}}</clr-dg-cell>
+    <clr-dg-cell>{{storage.type}}</clr-dg-cell>
+    <clr-dg-cell>{{storage.state}}</clr-dg-cell>
+    <clr-dg-cell>{{storage.comment}}</clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+
+  </clr-dg-footer>
+
+</clr-datagrid>
+

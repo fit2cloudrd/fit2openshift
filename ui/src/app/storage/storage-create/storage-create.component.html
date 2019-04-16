@@ -1,0 +1,73 @@
+<clr-wizard #wizard [(clrWizardOpen)]="createClusterOpened">
+  <clr-wizard-title>创建存储集群</clr-wizard-title>
+
+  <clr-wizard-button [type]="'cancel'">取消</clr-wizard-button>
+  <clr-wizard-button [type]="'previous'">上一步</clr-wizard-button>
+  <clr-wizard-button [type]="'next'">下一步</clr-wizard-button>
+  <clr-wizard-button [type]="'finish'">完成</clr-wizard-button>
+  <clr-wizard-page [clrWizardPageNextDisabled]="!isBasicFormValid">
+    <form class="clr-form clr-form-compact" #basicFrom='ngForm'>
+      <ng-template clrPageTitle>基本信息</ng-template>
+      <div class="clr-form-control clr-row">
+        <label for="name" class="clr-control-label clr-col-xs-12 clr-col-md-2">集群名称</label>
+        <div class="clr-control-container clr-col-xs-12 clr-col-md-10">
+          <div class="clr-input-wrapper">
+            <input id="name" type="text" pattern="^[a-z0-9]+(?:[._-][a-z0-9]+)*$" placeholder="Eg: clusterA"
+                   minlength="2" maxlength="128"
+                   class="clr-input" [(ngModel)]="storageCluster.name"
+                   name="cluster_name" (keyup)="handleValidation()" required>
+            <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+          </div>
+          <i *ngIf="checkOnGoing" class="fa fa-spinner fa-pulse"></i>
+          <span class="clr-subtext">{{nameTooltipText}}</span>
+        </div>
+      </div>
+
+      <div class="clr-form-control clr-row">
+        <label for="package" class="clr-control-label clr-col-xs-12 clr-col-md-2">离线包</label>
+        <div class="clr-control-container clr-col-xs-12 clr-col-md-10">
+          <div class="clr-select-wrapper">
+            <select id="package" [(ngModel)]="storageCluster.package" name="package" class="clr-select"
+                    (change)="onPackageChange()" required>
+              <option [value]=null>请选择离线包</option>
+              <option *ngFor="let pk of packages" [value]="pk.name">{{pk.name}}</option>
+            </select>
+            <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+          </div>
+          <span class="clr-subtext">{{packageToolTipText}}</span>
+        </div>
+      </div>
+
+      <div class="clr-form-control clr-row">
+        <label for="comment" class="clr-control-label clr-col-xs-12 clr-col-md-2">描述</label>
+        <div class="clr-control-container clr-col-xs-12 clr-col-md-10">
+          <div class="clr-textarea-wrapper">
+            <textarea id="comment" [(ngModel)]="storageCluster.comment" [ngModelOptions]="{standalone: true}"
+                      name="comment"></textarea>
+            <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+          </div>
+          <span class="clr-subtext"></span>
+        </div>
+      </div>
+    </form>
+  </clr-wizard-page>
+  <clr-wizard-page [clrWizardPageNextDisabled]="!templateForm.valid">
+    <ng-template clrPageTitle>部署模型</ng-template>
+    <form clrForm #templateForm='ngForm'>
+      <clr-radio-wrapper *ngFor="let template of templates">
+        <input required type="radio" clrRadio [(ngModel)]="storageCluster.template" [value]="template.name"
+               name="template" (change)="templateOnChange()"/>
+        <label>{{template.name}}({{template.comment}})</label>
+      </clr-radio-wrapper>
+    </form>
+  </clr-wizard-page>
+  <clr-wizard-page [clrWizardPageNextDisabled]="!templateForm.valid">
+    <ng-template clrPageTitle>节点配置</ng-template>
+  </clr-wizard-page>
+  <clr-wizard-page [clrWizardPageNextDisabled]="!templateForm.valid">
+    <ng-template clrPageTitle>配置检查</ng-template>
+  </clr-wizard-page>
+  <clr-wizard-page [clrWizardPageNextDisabled]="!templateForm.valid">
+    <ng-template clrPageTitle>完成</ng-template>
+  </clr-wizard-page>
+</clr-wizard>

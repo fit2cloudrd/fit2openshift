@@ -8,6 +8,7 @@ export class Package {
 export class PackageMeta {
   name: string;
   version: string;
+  resource: string;
   templates: Template[];
 }
 
