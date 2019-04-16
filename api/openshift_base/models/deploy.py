@@ -34,7 +34,6 @@ class DeployExecution(AbstractProjectResourceModel, AbstractExecutionModel):
     def start(self):
         local_hostname = Setting.objects.filter(key="local_hostname").first()
         registry_hostname = Setting.objects.filter(key="registry_hostname").first()
-
         result = {"raw": {}, "summary": {}}
         pre_deploy_execution_start.send(self.__class__, execution=self)
         playbooks = self.project.playbook_set.filter(name__endswith='-' + self.operation).order_by('name')
