@@ -1,0 +1,5 @@
+---
+- hosts: glusterfs
+  roles:
+    - config-firewall
+    - install-glusterfs

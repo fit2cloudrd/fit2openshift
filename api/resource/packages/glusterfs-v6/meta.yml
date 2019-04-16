@@ -14,26 +14,8 @@ playbooks:
     alias: playbooks/uninstall_glusterfs.yml
   - name: config_nodes
     alias: openshift-ansible/playbooks/prerequisites.yml
-
 roles:
-  - name: glusterfs
-
 templates:
-  - name: glusterfs
-    comment: glusterfs 集群
-    operations:
-      - name: install
-        comment: '安装'
-        playbooks:
-          - install_glusterfs
-      - name: uninstall
-        comment: '卸载'
-        playbooks:
-          - uninstall_glusterfs
-      - name: config_nodes
-        comment: '变更节点'
-        playbooks:
-          - config_nodes
   - name: glusterfs-heketi
     comment: glusterfs-heketi 集群
     operations:
@@ -50,4 +32,44 @@ templates:
         playbooks:
           - config_nodes
     roles:
-      - name: heketi
+      - name: glusterfs
+        vars:
+        meta:
+          hidden: false
+          allow_os:
+            - name: CentOS
+              version:
+                - "7.4"
+                - "7.5"
+          node_vars:
+          requires:
+            nodes_require:
+              - '>'
+              - 3
+            volumes_require:
+              - name: "system"
+                verbose: "系统卷:"
+                minimal: 50
+                excellent: 100
+                comment: "系统卷，用于运行操作系统"
+                unit: "GB"
+              - name: "data"
+                verbose: "数据卷:"
+                minimal: 100
+                excellent: 500
+                comment: "数据卷,用于存储gluster数据"
+                unit: "GB"
+            device_require:
+              - name: "cpu_core"
+                verbose: "CPU 核心数"
+                minimal: 4
+                excellent: 8
+                comment: "无"
+                unit: "个"
+              - name: "memory_size"
+                verbose: "内存大小"
+                minimal: 8
+                excellent: 16
+                unit: "GB"
+                comment: "无"
+
