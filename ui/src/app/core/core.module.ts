@@ -9,10 +9,11 @@ import {RouterModule} from '@angular/router';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {BaseModule} from '../base/base.module';
 import {TipModule} from '../tip/tip.module';
+import {HostsFilterPipe} from '../cluster/hosts-filter.pipe';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [HostsFilterPipe],
   imports: [
     CommonModule,
     ClarityModule,
@@ -36,6 +37,7 @@ import {TipModule} from '../tip/tip.module';
     BrowserModule,
     NgxEchartsModule,
     BrowserAnimationsModule,
+    HostsFilterPipe
   ]
 })
 export class CoreModule {

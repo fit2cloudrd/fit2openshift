@@ -30,11 +30,11 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: 'cluster', pathMatch: 'full'},
       {path: 'cluster', component: ClusterComponent},
+      {path: 'storage', component: StorageComponent},
       {path: 'offline', component: PackageComponent},
       {path: 'user', component: UserComponent},
       {path: 'host', component: HostComponent},
       {path: 'setting', component: SettingComponent},
-      {path: 'storage', component: StorageComponent},
       {
         path: 'cluster/:name',
         component: ClusterDetailComponent,

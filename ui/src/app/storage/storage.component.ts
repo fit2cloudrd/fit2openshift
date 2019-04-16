@@ -1,8 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ClusterCreateComponent} from '../cluster/cluster-create/cluster-create.component';
-import {ClusterListComponent} from '../cluster/cluster-list/cluster-list.component';
-import {StorageCreateComponent} from './storage-create/storage-create.component';
-import {StorageListComponent} from './storage-list/storage-list.component';
+import {StorageCreateComponent} from '../storage/storage-create/storage-create.component';
+import {StorageListComponent} from '../storage/storage-list/storage-list.component';
 
 @Component({
   selector: 'app-storage',
@@ -15,7 +13,6 @@ export class StorageComponent implements OnInit {
 
   @ViewChild(StorageListComponent)
   listStorage: StorageListComponent;
-
   constructor() {
   }
 
@@ -26,10 +23,9 @@ export class StorageComponent implements OnInit {
     this.creationStorage.newStorage();
   }
 
-  createCluster(created: boolean) {
+  createStorage(created: boolean) {
     if (created) {
       this.listStorage.listStorage();
     }
   }
-
 }

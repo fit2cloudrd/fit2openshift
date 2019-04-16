@@ -18,13 +18,12 @@ import {LogModule} from './log/log.module';
 import {TipModule} from './tip/tip.module';
 import {HostModule} from './host/host.module';
 import {DeployModule} from './deploy/deploy.module';
-import {SettingComponent} from './setting/setting.component';
 import {SettingModule} from './setting/setting.module';
 import {StorageModule} from './storage/storage.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

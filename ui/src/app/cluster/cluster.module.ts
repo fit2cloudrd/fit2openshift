@@ -12,7 +12,7 @@ import {HostsFilterPipe} from './hosts-filter.pipe';
 import {DeviceCheckService} from './device-check.service';
 
 @NgModule({
-  declarations: [ClusterComponent, ClusterListComponent, ClusterDetailComponent, ClusterCreateComponent, HostsFilterPipe],
+  declarations: [ClusterComponent, ClusterListComponent, ClusterDetailComponent, ClusterCreateComponent],
   imports: [
     CommonModule,
     TipModule,

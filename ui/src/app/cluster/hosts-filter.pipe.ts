@@ -1,7 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {Host} from '../host/host';
 import {Node} from '../node/node';
-import {findNode} from '@angular/compiler';
 
 @Pipe({
   name: 'hostsFilter',

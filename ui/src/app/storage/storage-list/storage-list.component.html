@@ -1,3 +1,16 @@
+<clr-modal [(clrModalOpen)]="deleteModal" [clrModalSize]="'lg'">
+  <h3 class="modal-title">确认删除</h3>
+  <div class="modal-body">
+    <p>删除操作不可恢复,确认要删除集群:
+      <span *ngFor="let storage of storages">{{storage.name}}</span>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="confirmDelete()">确认</button>
+    <button type="button" class="btn" (click)="deleteModal = false">取消</button>
+  </div>
+</clr-modal>
+
 <clr-datagrid [clrDgLoading]="loading" [clrDgSelected]="selectedStorages">
   <clr-dg-action-bar>
     <button type="button" class="btn btn-sm btn-secondary" (click)="addNewStorage()">
@@ -11,16 +24,16 @@
     </button>
   </clr-dg-action-bar>
   <clr-dg-column>名称</clr-dg-column>
-  <clr-dg-column>节点</clr-dg-column>
-  <clr-dg-column>类型</clr-dg-column>
-  <clr-dg-column>运行状态</clr-dg-column>
+  <clr-dg-column>离线包</clr-dg-column>
+  <clr-dg-column>部署模型</clr-dg-column>
+  <clr-dg-column>创建时间</clr-dg-column>
   <clr-dg-column>备注</clr-dg-column>
 
   <clr-dg-row *clrDgItems="let storage of storages" [clrDgItem]="storage">
-    <clr-dg-cell>{{storage.name}}</clr-dg-cell>
-    <clr-dg-cell>{{storage.hostSize}}</clr-dg-cell>
-    <clr-dg-cell>{{storage.type}}</clr-dg-cell>
-    <clr-dg-cell>{{storage.state}}</clr-dg-cell>
+    <clr-dg-cell><a routerLink="{{storage.name}}">{{storage.name}}</a></clr-dg-cell>
+    <clr-dg-cell>{{storage.package}}</clr-dg-cell>
+    <clr-dg-cell>{{storage.template}}</clr-dg-cell>
+    <clr-dg-cell>{{storage.date_created}}</clr-dg-cell>
     <clr-dg-cell>{{storage.comment}}</clr-dg-cell>
   </clr-dg-row>
 
