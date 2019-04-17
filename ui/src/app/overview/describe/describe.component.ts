@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Cluster} from '../../cluster/cluster';
+import {Cluster} from '../../cluster/class/cluster';
 import {PackageService} from '../../package/package.service';
 import {Portal, Template} from '../../package/package';
-import {ClusterRoleService} from '../../cluster/cluster-role.service';
+import {ClusterRoleService} from '../../cluster/service/cluster-role.service';
 
 @Component({
   selector: 'app-describe',

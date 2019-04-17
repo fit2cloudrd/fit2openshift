@@ -1,12 +1,12 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
-import {TipService} from '../../tip/tip.service';
-import {TipLevels} from '../../tip/tipLevels';
-import {MessageService} from '../../base/message.service';
-import {MessageLevels} from '../../base/message/message-level';
-import {SettingService} from '../../setting/setting.service';
-import {StorageService} from '../storage.service';
-import {Storage} from '../storage';
+import {TipService} from '../../../tip/tip.service';
+import {TipLevels} from '../../../tip/tipLevels';
+import {MessageService} from '../../../base/message.service';
+import {MessageLevels} from '../../../base/message/message-level';
+import {SettingService} from '../../../setting/setting.service';
+import {StorageService} from '../../service/storage.service';
+import {Storage} from '../../class/storage';
 
 @Component({
   selector: 'app-storage-list',

@@ -1,5 +1,5 @@
-import {Node} from '../node/node';
-import {NodeVars} from '../package/package';
+import {Node} from '../../node/node';
+import {NodeVars} from '../../package/package';
 
 export class Group {
   name: string;

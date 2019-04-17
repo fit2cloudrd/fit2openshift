@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NodeService} from '../node.service';
 import {Node} from '../node';
-import {Cluster} from '../../cluster/cluster';
+import {Cluster} from '../../cluster/class/cluster';
 
 @Component({
   selector: 'app-node-list',

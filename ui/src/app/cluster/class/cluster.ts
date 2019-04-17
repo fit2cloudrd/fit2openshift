@@ -1,4 +1,4 @@
-import {Node} from '../node/node';
+import {Node} from '../../node/node';
 
 
 export class Cluster {
@@ -10,7 +10,6 @@ export class Cluster {
   date_created: string;
   current_task_id: string;
   state: string;
-  // my field
   node: Node[];
   configs: ExtraConfig[];
 }

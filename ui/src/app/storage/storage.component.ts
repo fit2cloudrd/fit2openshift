@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {StorageCreateComponent} from '../storage/storage-create/storage-create.component';
-import {StorageListComponent} from '../storage/storage-list/storage-list.component';
+import {StorageCreateComponent} from './component/storage-create/storage-create.component';
+import {StorageListComponent} from './component/storage-list/storage-list.component';
 
 @Component({
   selector: 'app-storage',

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HostService} from '../host/host.service';
-import {Node} from '../node/node';
-import {Host} from '../host/host';
-import {Os, Template} from '../package/package';
+import {HostService} from '../../host/host.service';
+import {Node} from '../../node/node';
+import {Host} from '../../host/host';
+import {Os, Template} from '../../package/package';
 
 @Injectable({
   providedIn: 'root'

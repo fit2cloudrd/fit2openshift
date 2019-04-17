@@ -1,12 +1,10 @@
 import {Component, OnInit, Output} from '@angular/core';
-import {Cluster} from '../cluster/cluster';
+import {Cluster} from '../cluster/class/cluster';
 import {ActivatedRoute} from '@angular/router';
-import {ClusterService} from '../cluster/cluster.service';
 import {Execution} from './operater/execution';
 import {LogService} from '../log/log.service';
-import {Subject} from 'rxjs';
-import {Tip} from '../tip/tip';
 import {DeployService} from './deploy.service';
+import {ClusterService} from '../cluster/service/cluster.service';
 
 @Component({
   selector: 'app-deploy',

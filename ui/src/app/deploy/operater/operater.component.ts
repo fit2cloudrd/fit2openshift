@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {Cluster} from '../../cluster/cluster';
+import {Cluster} from '../../cluster/class/cluster';
 import {OperaterService} from './operater.service';
 import {Execution} from './execution';
 import {LogService} from '../../log/log.service';

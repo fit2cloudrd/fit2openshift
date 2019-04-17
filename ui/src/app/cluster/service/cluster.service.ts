@@ -1,14 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Cluster, ExtraConfig} from './cluster';
+import {Cluster, ExtraConfig} from '../class/cluster';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {HostService} from '../host/host.service';
-
+import {HostService} from '../../host/host.service';
 
 const baseClusterUrl = '/api/v1/clusters/';
 
-const baseClusterConfigUrl = '/api/v1/clusters/{cluster_name}/configs/';
 
 @Injectable({
   providedIn: 'root'
@@ -28,14 +26,6 @@ export class ClusterService {
       catchError(error => throwError(error))
     );
   }
-
-  configCluster(clusterName: string, extraConfig: ExtraConfig): Observable<ExtraConfig> {
-    return this.http.post<ExtraConfig>(`${baseClusterConfigUrl.replace('{cluster_name}', clusterName)}`, extraConfig).pipe(
-      catchError(error => throwError(error))
-    );
-  }
-
-
   createCluster(cluster: Cluster): Observable<Cluster> {
     return this.http.post<Cluster>(baseClusterUrl, cluster).pipe(
       catchError(error => throwError(error))

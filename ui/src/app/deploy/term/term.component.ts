@@ -4,7 +4,7 @@ import {Execution} from '../operater/execution';
 import {WebsocketService} from './websocket.service';
 import {OperaterService} from '../operater/operater.service';
 import {Subject, Subscription} from 'rxjs';
-import {Cluster} from '../../cluster/cluster';
+import {Cluster} from '../../cluster/class/cluster';
 import {LogService} from '../../log/log.service';
 import {DeployService} from '../deploy.service';
 
@@ -48,7 +48,7 @@ export class TermComponent implements OnInit, OnDestroy {
 
     this.term = new Terminal({
       cursorBlink: true,
-      cols: 200,
+      cols: 120,
       rows: 33,
       letterSpacing: 0,
       fontSize: 16

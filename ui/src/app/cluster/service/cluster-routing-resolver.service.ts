@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {Cluster} from './cluster';
+import {Cluster} from '../class/cluster';
 import {Observable} from 'rxjs';
-import {ClusterService} from './cluster.service';
 import {map, take, tap} from 'rxjs/operators';
+import {ClusterService} from './cluster.service';
 
 @Injectable()
 export class ClusterRoutingResolverService implements Resolve<Cluster> {

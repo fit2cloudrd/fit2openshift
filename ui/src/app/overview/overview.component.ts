@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
-import {Cluster} from '../cluster/cluster';
-import {ClusterService} from '../cluster/cluster.service';
+import {Cluster} from '../cluster/class/cluster';
 
 @Component({
   selector: 'app-overview',
@@ -17,6 +16,7 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit() {
     this.route.parent.data.subscribe(data => {
+      console.log(data);
       this.currentCluster = data['cluster'];
     });
   }

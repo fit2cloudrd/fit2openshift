@@ -3,7 +3,7 @@ import {NodeService} from './node.service';
 import {NodeCreateComponent} from './node-create/node-create.component';
 import {NodeListComponent} from './node-list/node-list.component';
 import {ActivatedRoute} from '@angular/router';
-import {Cluster} from '../cluster/cluster';
+import {Cluster} from '../cluster/class/cluster';
 
 @Component({
   selector: 'app-node',

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {NodeService} from '../node.service';
-import {Cluster} from '../../cluster/cluster';
+import {Cluster} from '../../cluster/class/cluster';
 import {Node} from '../node';
 import {TipService} from '../../tip/tip.service';
 import {TipLevels} from '../../tip/tipLevels';

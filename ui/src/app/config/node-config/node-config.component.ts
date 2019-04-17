@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NodeService} from '../../node/node.service';
 import {Node} from '../../node/node';
-import {Cluster} from '../../cluster/cluster';
+import {Cluster} from '../../cluster/class/cluster';
 import {Role} from '../../node/role';
 
 @Component({

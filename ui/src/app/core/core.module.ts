@@ -9,7 +9,7 @@ import {RouterModule} from '@angular/router';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {BaseModule} from '../base/base.module';
 import {TipModule} from '../tip/tip.module';
-import {HostsFilterPipe} from '../cluster/hosts-filter.pipe';
+import {HostsFilterPipe} from '../cluster/pipe/hosts-filter.pipe';
 
 
 @NgModule({

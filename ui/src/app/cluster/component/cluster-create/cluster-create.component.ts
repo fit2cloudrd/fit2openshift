@@ -1,21 +1,22 @@
 import {Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {Cluster, ExtraConfig} from '../cluster';
-import {TipService} from '../../tip/tip.service';
+import {Cluster, ExtraConfig} from '../../class/cluster';
+import {TipService} from '../../../tip/tip.service';
 import {ClrWizard} from '@clr/angular';
-import {Config, Package, Template} from '../../package/package';
-import {PackageService} from '../../package/package.service';
-import {TipLevels} from '../../tip/tipLevels';
-import {ClusterService} from '../cluster.service';
-import {NodeService} from '../../node/node.service';
-import {RelationService} from '../relation.service';
-import {Host} from '../../host/host';
-import {Node} from '../../node/node';
-import {HostService} from '../../host/host.service';
-import {Group} from '../group';
-import {CheckResult, DeviceCheckService} from '../device-check.service';
+import {Config, Package, Template} from '../../../package/package';
+import {PackageService} from '../../../package/package.service';
+import {TipLevels} from '../../../tip/tipLevels';
+import {OpenshiftClusterService} from '../../service/openshift-cluster.service';
+import {NodeService} from '../../../node/node.service';
+import {RelationService} from '../../service/relation.service';
+import {Host} from '../../../host/host';
+import {Node} from '../../../node/node';
+import {HostService} from '../../../host/host.service';
+import {Group} from '../../class/group';
+import {CheckResult, DeviceCheckService} from '../../service/device-check.service';
 import {config, Subject} from 'rxjs';
 import {NgForm} from '@angular/forms';
 import {debounceTime} from 'rxjs/operators';
+import {OpenshiftCluster} from '../../class/openshift-cluster';
 
 export const CHECK_STATE_PENDING = 'pending';
 export const CHECK_STATE_SUCCESS = 'success';
@@ -34,7 +35,7 @@ export class ClusterCreateComponent implements OnInit, OnDestroy {
   @ViewChild('wizard') wizard: ClrWizard;
   createClusterOpened: boolean;
   isSubmitGoing = false;
-  cluster: Cluster = new Cluster();
+  cluster: OpenshiftCluster = new OpenshiftCluster();
   template: Template = new Template();
   configs: Config[] = [];
   package: Package;
@@ -61,7 +62,7 @@ export class ClusterCreateComponent implements OnInit, OnDestroy {
   @Output() create = new EventEmitter<boolean>();
   loadingFlag = false;
 
-  constructor(private tipService: TipService, private nodeService: NodeService, private clusterService: ClusterService
+  constructor(private tipService: TipService, private nodeService: NodeService, private clusterService: OpenshiftClusterService
     , private packageService: PackageService, private relationService: RelationService,
               private hostService: HostService, private deviceCheckService: DeviceCheckService) {
   }
@@ -74,7 +75,7 @@ export class ClusterCreateComponent implements OnInit, OnDestroy {
         if (this.isNameValid) {
           if (!this.checkOnGoing) {
             this.checkOnGoing = true;
-            this.clusterService.getCluster(this.cluster.name).subscribe(data => {
+            this.clusterService.getOpenshiftCluster(this.cluster.name).subscribe(data => {
               this.checkOnGoing = false;
               this.nameTooltipText = '集群名称 ' + this.cluster.name + '已存在！';
               this.isNameValid = false;
@@ -132,7 +133,7 @@ export class ClusterCreateComponent implements OnInit, OnDestroy {
 
   reset() {
     this.wizard.reset();
-    this.cluster = new Cluster();
+    this.cluster = new OpenshiftCluster();
     this.cluster.template = '';
     this.template = null;
     this.templates = null;
@@ -252,7 +253,7 @@ export class ClusterCreateComponent implements OnInit, OnDestroy {
       return;
     }
     this.isSubmitGoing = true;
-    this.clusterService.createCluster(this.cluster).subscribe(data => {
+    this.clusterService.createOpenshiftCluster(this.cluster).subscribe(data => {
       this.cluster = data;
       this.createNodes();
     });
@@ -289,7 +290,7 @@ export class ClusterCreateComponent implements OnInit, OnDestroy {
       const extraConfig: ExtraConfig = new ExtraConfig();
       extraConfig.key = c.name;
       extraConfig.value = c.value;
-      promises.push(this.clusterService.configCluster(this.cluster.name, extraConfig).toPromise());
+      promises.push(this.clusterService.configOpenshiftCluster(this.cluster.name, extraConfig).toPromise());
       Promise.all(promises).then((data) => {
         this.isSubmitGoing = false;
         this.createClusterOpened = false;

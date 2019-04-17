@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Storage} from './storage';
+import {Storage} from '../class/storage';
 
-export const baseStorageUrl = '/api/v1/storage/clusters/';
+export const baseStorageUrl = '/api/v1/storage/';
 
 @Injectable({
   providedIn: 'root'

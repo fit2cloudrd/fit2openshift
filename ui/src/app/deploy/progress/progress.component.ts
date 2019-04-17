@@ -3,7 +3,7 @@ import {Subscription, timer} from 'rxjs';
 import {OperaterService} from '../operater/operater.service';
 import {WebsocketService} from '../term/websocket.service';
 import {Execution} from '../operater/execution';
-import {Cluster} from '../../cluster/cluster';
+import {Cluster} from '../../cluster/class/cluster';
 import {DeployService} from '../deploy.service';
 
 export class ProgressMessage {

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Cluster} from '../cluster/cluster';
+import {Cluster} from '../cluster/class/cluster';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

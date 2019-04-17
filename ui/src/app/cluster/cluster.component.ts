@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ClusterCreateComponent} from './cluster-create/cluster-create.component';
-import {ClusterListComponent} from './cluster-list/cluster-list.component';
-import {Cluster} from './cluster';
+import {ClusterCreateComponent} from './component/cluster-create/cluster-create.component';
+import {ClusterListComponent} from './component/cluster-list/cluster-list.component';
+import {Cluster} from './class/cluster';
 
 @Component({
   selector: 'app-cluster',
