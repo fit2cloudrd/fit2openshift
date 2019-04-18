@@ -25,7 +25,6 @@ class HostViewSet(viewsets.ModelViewSet):
     permission_classes = (IsSuperUser,)
     queryset = ClusterHost.objects.all()
 
-
 class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = ClusterGroupSerializer
     queryset = ClusterGroup.objects.all()

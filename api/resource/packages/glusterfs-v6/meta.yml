@@ -3,7 +3,7 @@ version: 6.0
 resource: storage
 playbooks:
   - name: install_glusterfs
-    alias: playbooks/install_glusterfs.yml
+    alias: playbooks/glusterfs_install.yml
   - name: install_heketi
     alias: playbooks/install_heketi.yml
   - name:  uninstall_glusterfs
@@ -14,7 +14,6 @@ playbooks:
     alias: playbooks/uninstall_glusterfs.yml
   - name: config_nodes
     alias: openshift-ansible/playbooks/prerequisites.yml
-roles:
 templates:
   - name: glusterfs-heketi
     comment: glusterfs-heketi 集群

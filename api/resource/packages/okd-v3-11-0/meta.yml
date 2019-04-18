@@ -1,5 +1,6 @@
 name: okd-3.11
 version: 3.11
+resource: openshift
 install_playbooks:
   - name: 1-config_ssh-install
     alias: playbooks/config_ssh.yml
@@ -24,8 +25,6 @@ uninstall_playbooks:
   - name: 2-okd-uninstall
     alias: openshift-ansible/playbooks/adhoc/uninstall.yml
 
-
-# template public roles
 roles:
   - name: etcd
     children:
@@ -119,7 +118,6 @@ templates:
         default: masters-1.$cluster_name.f2o
         required: true
         help_text: 集群通信域名，解析至master节点
-
     roles:
       - name: masters
         vars:

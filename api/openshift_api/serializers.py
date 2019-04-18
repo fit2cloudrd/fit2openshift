@@ -19,5 +19,10 @@ class OpenshiftClusterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OpenshiftCluster
-        fields = ['id', 'name', 'package', 'template', 'comment', 'current_task_id', 'state', 'date_created', ]
-        read_only_fields = ['id', 'date_created', 'current_task_id', 'state']
+        fields = ['id', 'name', 'package', 'template', 'comment', 'date_created']
+        read_only_fields = ['id', 'date_created']
+
+
+class ClusterConfigSerializer(serializers.Serializer):
+    key = serializers.CharField(max_length=128)
+    value = serializers.JSONField()

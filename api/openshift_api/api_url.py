@@ -5,6 +5,9 @@ from openshift_api import api
 app_name = "openshift_api"
 router = DefaultRouter()
 
-router.register('openshift/clusters', api.OpenshiftClusterViewSet, 'openshift-cluster')
+router.register('openshift', api.OpenshiftClusterViewSet, 'openshift')
+cluster_router = routers.NestedDefaultRouter(router, r'openshift', lookup='openshift')
+cluster_router.register(r'configs', api.ClusterConfigViewSet, 'cluster-config')
+
 urlpatterns = [
-              ] + router.urls
+              ] + router.urls + cluster_router.urls

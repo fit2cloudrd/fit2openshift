@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.shortcuts import reverse
-from ansible_api.serializers import GroupSerializer, ProjectSerializer, Role
+from ansible_api.serializers import GroupSerializer, ProjectSerializer
 from ansible_api.serializers import HostSerializer as AnsibleHostSerializer
 from ansible_api.serializers.inventory import HostReadSerializer
 from openshift_base.models.cluster import AbstractCluster
@@ -8,7 +8,9 @@ from openshift_base.models.deploy import DeployExecution
 from openshift_base.models.host import Volume, HostInfo, Host
 from openshift_base.models.node import Node
 from openshift_base.models.package import Package
+from openshift_base.models.role import Role
 from openshift_base.models.setting import Setting
+from ansible_api.ctx import get_current_project
 
 __all__ = [
     'PackageSerializer', 'ClusterSerializer', 'NodeSerializer',
@@ -77,11 +79,6 @@ class ClusterSerializer(ProjectSerializer):
         read_only_fields = ['id', 'date_created']
 
 
-class ClusterConfigSerializer(serializers.Serializer):
-    key = serializers.CharField(max_length=128)
-    value = serializers.JSONField()
-
-
 class NodeSerializer(AnsibleHostSerializer):
     roles = serializers.SlugRelatedField(
         many=True, queryset=Role.objects.all(),
@@ -94,6 +91,11 @@ class NodeSerializer(AnsibleHostSerializer):
         names = super().get_field_names(declared_fields, info)
         names.append('roles')
         return names
+
+    def is_valid(self, raise_exception: bool = ...):
+        valid = super().is_valid(raise_exception=raise_exception)
+        print(valid)
+        return valid
 
     def save(self, **kwargs):
         self.validated_data['groups'] = self.validated_data.pop('roles', [])

@@ -1,9 +1,9 @@
 from rest_framework.routers import DefaultRouter
 from openshift_storage import api
 
-app_name = "openshift_api"
+app_name = "openshift_storage"
 router = DefaultRouter()
 
-router.register('storage/clusters', api.StorageClusterViewSet, 'storage-cluster')
+router.register('storage', api.StorageClusterViewSet, 'storage')
 urlpatterns = [
               ] + router.urls

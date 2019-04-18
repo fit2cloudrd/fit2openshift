@@ -1,8 +1,13 @@
 import os
+import logging
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 from ansible_api.models import Project, Playbook
 from openshift_base.models.role import Role
+
+logger = logging.getLogger(__name__)
 
 
 class AbstractCluster(Project):
@@ -21,7 +26,7 @@ class AbstractCluster(Project):
 
     def create_playbooks(self):
         for playbook in self.package.meta.get('playbooks', []):
-            url = 'file///{}'.format(os.path.join(self.package.path))
+            url = 'file:///{}'.format(os.path.join(self.package.path))
             Playbook.objects.create(
                 name=playbook['name'], alias=playbook['alias'],
                 type=Playbook.TYPE_LOCAL, url=url, project=self
@@ -40,12 +45,10 @@ class AbstractCluster(Project):
         for role in template.get('roles', []):
             _roles[role['name']] = role
         roles_data = [role for role in _roles.values()]
-
         children_data = {}
         for data in roles_data:
             children_data[data['name']] = data.pop('children', [])
             Role.objects.update_or_create(defaults=data, name=data['name'])
-
         for name, children_name in children_data.items():
             try:
                 role = Role.objects.get(name=name)

@@ -1,6 +1,5 @@
 import uuid
 from django.db import models
-
 from ansible_api.models.inventory import BaseHost
 from ansible_api.models.utils import name_validator
 from ansible_api.tasks import run_im_adhoc
