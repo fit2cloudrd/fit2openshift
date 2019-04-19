@@ -1,9 +1,9 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {Cluster} from '../../cluster/class/cluster';
+import {Cluster} from '../../../cluster/class/cluster';
 import {OperaterService} from './operater.service';
 import {Execution} from './execution';
-import {LogService} from '../../log/log.service';
-import {DeployService} from '../deploy.service';
+import {LogService} from '../../../log/log.service';
+import {DeployService} from '../../service/deploy.service';
 
 @Component({
   selector: 'app-operater',

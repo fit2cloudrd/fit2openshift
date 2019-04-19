@@ -4,9 +4,9 @@ import {Execution} from '../operater/execution';
 import {WebsocketService} from './websocket.service';
 import {OperaterService} from '../operater/operater.service';
 import {Subject, Subscription} from 'rxjs';
-import {Cluster} from '../../cluster/class/cluster';
-import {LogService} from '../../log/log.service';
-import {DeployService} from '../deploy.service';
+import {Cluster} from '../../../cluster/class/cluster';
+import {LogService} from '../../../log/log.service';
+import {DeployService} from '../../service/deploy.service';
 
 @Component({
   selector: 'app-term',

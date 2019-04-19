@@ -3,7 +3,7 @@ version: 6.0
 resource: storage
 playbooks:
   - name: install_glusterfs
-    alias: playbooks/glusterfs_install.yml
+    alias: playbooks/glusterfs-install.yml
   - name: install_heketi
     alias: playbooks/install_heketi.yml
   - name:  uninstall_glusterfs

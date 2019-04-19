@@ -67,18 +67,6 @@ class HostSerializer(HostReadSerializer):
         read_only_fields = ['id', 'info', 'comment']
 
 
-class ClusterSerializer(ProjectSerializer):
-    package = serializers.SlugRelatedField(
-        queryset=Package.objects.all(),
-        slug_field='name', required=False
-    )
-
-    class Meta:
-        model = AbstractCluster
-        fields = ['id', 'name', 'package', 'template', 'comment', 'date_created', ]
-        read_only_fields = ['id', 'date_created']
-
-
 class NodeSerializer(AnsibleHostSerializer):
     roles = serializers.SlugRelatedField(
         many=True, queryset=Role.objects.all(),
@@ -135,7 +123,7 @@ class DeployExecutionSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = [
             'id', 'state', 'num', 'result_summary', 'result_raw',
-            'date_created', 'date_start', 'date_end', 'project', 'timedelta', 'current_task', 'progress'
+            'date_created', 'date_start', 'date_end', 'project', 'timedelta', 'current_play', 'progress'
         ]
 
     @staticmethod
@@ -149,3 +137,16 @@ class DeployExecutionSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_progress_ws_url(obj):
         return '/ws/progress/{}/'.format(obj.id)
+
+
+class ClusterSerializer(ProjectSerializer):
+    package = serializers.SlugRelatedField(
+        queryset=Package.objects.all(),
+        slug_field='name', required=False
+    )
+    current_execution = DeployExecutionSerializer(read_only=True)
+
+    class Meta:
+        model = AbstractCluster
+        fields = ['id', 'name', 'package', 'template', 'comment', 'date_created', 'current_execution']
+        read_only_fields = ['id', 'date_created']

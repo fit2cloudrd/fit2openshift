@@ -51,7 +51,7 @@ export class StorageCreateComponent implements OnInit, OnDestroy {
   suffix = '.f2o';
   @ViewChild('basicFrom')
   basicForm: NgForm;
-  isNameValid = true;
+  isNameValid = false;
   nameTooltipText = '';
   packageToolTipText = '';
   checkOnGoing = false;
@@ -257,6 +257,11 @@ export class StorageCreateComponent implements OnInit, OnDestroy {
     this.nodes.forEach(node => {
       promises.push(this.nodeService.createNode(this.storage.name, node).toPromise());
     });
+    Promise.all(promises).then((data) => {
+      this.isSubmitGoing = false;
+      this.createStorageOpened = false;
+      this.create.emit(true);
+    });
   }
 
   canNodeNext(): boolean {
@@ -302,6 +307,7 @@ export class StorageCreateComponent implements OnInit, OnDestroy {
     });
     return h;
   }
+
   deviceCheck() {
     setTimeout(() => {
       this.checkCpu();

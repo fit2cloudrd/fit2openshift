@@ -1,3 +1,4 @@
+import json
 import logging
 
 from ansible_api.models.mixins import AbstractProjectResourceModel, AbstractExecutionModel
@@ -13,7 +14,9 @@ logger = logging.getLogger(__name__)
 class DeployExecution(AbstractProjectResourceModel, AbstractExecutionModel):
     project = models.ForeignKey('ansible_api.Project', on_delete=models.CASCADE)
     operation = models.CharField(max_length=128, blank=False, null=False)
+    progress = models.FloatField(default=0)
     extra_vars = common_models.JsonDictTextField(default={})
+    current_play = models.CharField(max_length=128, null=True, default=None)
 
     def start(self):
         result = {"raw": {}, "summary": {}}
@@ -26,9 +29,16 @@ class DeployExecution(AbstractProjectResourceModel, AbstractExecutionModel):
         try:
             for opt in template.get('operations', []):
                 if opt['name'] == self.operation:
+                    total_palybook = len(opt.get('playbooks'))
+                    current = 0
                     for playbook_name in opt.get('playbooks'):
                         print("\n>>> Start run {} ".format(playbook_name))
+                        self.current_play = playbook_name
+                        current = current + 1
+                        self.progress = current / total_palybook * 100
+                        self.save()
                         playbook = self.project.playbook_set.filter(name=playbook_name).first()
+
                         _result = playbook.execute(extra_vars=self.extra_vars)
                         result["summary"].update(_result["summary"])
                         if not _result.get('summary', {}).get('success', False):
@@ -38,6 +48,11 @@ class DeployExecution(AbstractProjectResourceModel, AbstractExecutionModel):
             result['summary'] = {'error': 'Unexpect error occur: {}'.format(e)}
         post_deploy_execution_start.send(self.__class__, execution=self, result=result)
         return result
+
+    def to_json(self):
+        dict = {'current_play': self.current_play,
+                'progress': self.progress}
+        return json.dumps(dict)
 
     class Meta:
         get_latest_by = 'date_created'

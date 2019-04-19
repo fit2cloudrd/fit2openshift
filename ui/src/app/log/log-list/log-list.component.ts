@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {Log} from '../log';
 import {LogService} from '../log.service';
 import {Cluster} from '../../cluster/class/cluster';
-import {Execution} from '../../deploy/operater/execution';
+import {Execution} from '../../deploy/component/operater/execution';
 import {HostListComponent} from '../../host/host-list/host-list.component';
 import {LogDetailComponent} from '../log-detail/log-detail.component';
 

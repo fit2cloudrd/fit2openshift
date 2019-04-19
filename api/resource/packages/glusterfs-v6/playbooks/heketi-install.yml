@@ -1,5 +1,0 @@
----
-- hosts: glusterfs
-  roles:
-    - config-firewall
-    - install-heketi

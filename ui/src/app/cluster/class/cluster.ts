@@ -1,4 +1,5 @@
 import {Node} from '../../node/node';
+import {Execution} from '../../deploy/component/operater/execution';
 
 
 export class Cluster {
@@ -12,6 +13,7 @@ export class Cluster {
   state: string;
   node: Node[];
   configs: ExtraConfig[];
+  current_execution: Execution;
 }
 
 export class ExtraConfig {

@@ -1,9 +1,7 @@
 import os
 import logging
 from django.db import models
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-
+import openshift_base
 from ansible_api.models import Project, Playbook
 from openshift_base.models.role import Role
 
@@ -11,13 +9,13 @@ logger = logging.getLogger(__name__)
 
 
 class AbstractCluster(Project):
-    executions = models.ManyToManyField('DeployExecution')
     package = models.ForeignKey("Package", null=True, on_delete=models.SET_NULL)
     template = models.CharField(max_length=64, blank=True, default='')
 
     @property
     def current_execution(self):
-        return self.executions.first()
+        current = openshift_base.models.deploy.DeployExecution.objects.filter(project=self).first()
+        return current
 
     def get_template_meta(self):
         for template in self.package.meta.get('templates', []):

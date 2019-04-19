@@ -18,12 +18,9 @@ class F2OWebsocket(JsonWebsocketConsumer):
 
     def send_deploy_execution(self):
         def func():
-            last_data = DeployExecution.objects.filter(id=self.execution_id).first().to_json()
             while not self.disconnected:
                 data = DeployExecution.objects.filter(id=self.execution_id).first().to_json()
-                if data and not data == last_data:
-                    self.send_json({'message': data})
-                    last_data = data
+                self.send_json({'message': data})
                 time.sleep(2)
 
         thread = threading.Thread(target=func)

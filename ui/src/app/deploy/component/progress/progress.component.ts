@@ -3,8 +3,9 @@ import {Subscription, timer} from 'rxjs';
 import {OperaterService} from '../operater/operater.service';
 import {WebsocketService} from '../term/websocket.service';
 import {Execution} from '../operater/execution';
-import {Cluster} from '../../cluster/class/cluster';
-import {DeployService} from '../deploy.service';
+import {Cluster} from '../../../cluster/class/cluster';
+import {DeployService} from '../../service/deploy.service';
+import {DeplayUtilService} from '../../service/deplay-util.service';
 
 export class ProgressMessage {
   id: string;
@@ -35,7 +36,7 @@ export class ProgressComponent implements OnInit, OnDestroy {
   @Input() currentCluster: Cluster;
 
 
-  constructor(private operaterService: OperaterService, private wsService: WebsocketService, private deployService: DeployService) {
+  constructor(private operaterService: OperaterService, private wsService: WebsocketService, private deployService: DeployService, private deplayUtil: DeplayUtilService) {
   }
 
 
@@ -46,9 +47,9 @@ export class ProgressComponent implements OnInit, OnDestroy {
         this.currentDeploy = this.getDeploymentName('none');
       } else {
         // 判断是否完成
-        if (this.currentExecution.state !== 'SUCCESS' && this.currentExecution.state !== 'FAILURE') {
+        if (!this.deplayUtil.execution_is_complated(this.currentExecution.state)) {
           this.subProgress();
-          this.currentDeploy = this.getDeploymentName(this.currentExecution.state);
+          this.currentDeploy = this.getDeploymentName(this.currentExecution.operation);
         } else {
           this.currentDeploy = this.getDeploymentName('none');
         }
