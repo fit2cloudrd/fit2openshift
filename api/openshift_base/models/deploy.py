@@ -34,15 +34,15 @@ class DeployExecution(AbstractProjectResourceModel, AbstractExecutionModel):
                     for playbook_name in opt.get('playbooks'):
                         print("\n>>> Start run {} ".format(playbook_name))
                         self.current_play = playbook_name
-                        current = current + 1
-                        self.progress = current / total_palybook * 100
                         self.save()
                         playbook = self.project.playbook_set.filter(name=playbook_name).first()
-
                         _result = playbook.execute(extra_vars=self.extra_vars)
                         result["summary"].update(_result["summary"])
                         if not _result.get('summary', {}).get('success', False):
                             break
+                        current = current + 1
+                        self.progress = current / total_palybook * 100
+                        self.save()
         except Exception as e:
             logger.error(e, exc_info=True)
             result['summary'] = {'error': 'Unexpect error occur: {}'.format(e)}
@@ -51,7 +51,9 @@ class DeployExecution(AbstractProjectResourceModel, AbstractExecutionModel):
 
     def to_json(self):
         dict = {'current_play': self.current_play,
-                'progress': self.progress}
+                'progress': self.progress,
+                'operation': self.operation,
+                'state': self.state}
         return json.dumps(dict)
 
     class Meta:
